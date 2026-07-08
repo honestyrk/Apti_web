@@ -52,12 +52,11 @@ Each file must succeed before running the next one, since later files depend on 
 2. Copy the full contents of [`supabase/seed.sql`](supabase/seed.sql) and run it.
 3. Then run [`supabase/seed_02_expanded_topics.sql`](supabase/seed_02_expanded_topics.sql) — adds a Data Interpretation category and a much broader Quantitative Aptitude / Logical Reasoning topic list (Problems on Trains, Pipes & Cisterns, Boats & Streams, Probability, Analogy, Classification, and more).
 4. Then run [`supabase/seed_03_remaining_topics.sql`](supabase/seed_03_remaining_topics.sql) — fills in sample MCQs for every topic added in step 3 that didn't already get sample questions, so every topic in the app has practiceable content.
-5. Then run, in order: `seed_04_quant_batch1.sql` through `seed_10_quant_batch7.sql` (7 files) — completes the entire **Quantitative Aptitude** category: all 32 topics now have 25+ hand-verified questions each.
-6. Then run, in order: `seed_11_reasoning_batch1.sql` through `seed_13_reasoning_batch3.sql` (3 files so far) — brings 6 of 12 **Logical Reasoning** topics to 25+ questions each (Direction Sense, Series Completion, Blood Relations, Coding-Decoding, Analogy, Classification). The remaining 6 Logical Reasoning topics, plus Verbal Ability, Data Interpretation, and Technical > CS/IT, are still in progress — check back in this file for updates as they're added.
+5. Then run, in order, every remaining file from `seed_04_quant_batch1.sql` through `seed_20_cs_batch1.sql` (17 files, numbered in the order they should run). Together these complete **every topic on the platform** — Quantitative Aptitude (32 topics), Logical Reasoning (12 topics), Verbal Ability (5 topics), Data Interpretation (4 topics), and Technical > CS/IT (5 topics) — each with 25+ hand-verified questions. (Technical > ECE, Mechanical, Civil, and EEE branches still have empty topics, reserved for a future pass or for you to fill via the Admin Panel.)
 
 All seed files are additive and safe to run once each, in the order listed (by filename number), on a fresh database; don't re-run any of them, since re-running would try to insert duplicate topics or questions.
 
-Together these create the full category/branch/topic tree (Quantitative Aptitude, Logical Reasoning, Verbal Ability, Data Interpretation, and Technical with 5 engineering branches) plus 1100+ sample MCQs, so you can test Practice and Test mode immediately. You can add more questions later through the Admin Panel.
+Together these create the full category/branch/topic tree (Quantitative Aptitude, Logical Reasoning, Verbal Ability, Data Interpretation, and Technical with 5 engineering branches) plus 1900+ sample MCQs, so you can test Practice and Test mode immediately. You can add more questions later through the Admin Panel.
 
 ---
 
