@@ -8,6 +8,7 @@ const icons = {
   'logical-reasoning': '🧩',
   'verbal-ability': '📖',
   technical: '💻',
+  'data-interpretation': '📊',
 }
 
 export default function CategoriesPage() {

@@ -50,8 +50,9 @@ Each file must succeed before running the next one, since later files depend on 
 
 1. In the SQL Editor, open a **New query**.
 2. Copy the full contents of [`supabase/seed.sql`](supabase/seed.sql) and run it.
+3. Then run [`supabase/seed_02_expanded_topics.sql`](supabase/seed_02_expanded_topics.sql) — adds a Data Interpretation category and a much broader Quantitative Aptitude / Logical Reasoning topic list (Problems on Trains, Pipes & Cisterns, Boats & Streams, Probability, Analogy, Classification, and more), with sample MCQs for a solid subset of them. Both seed files are additive and safe to run once each on a fresh database; don't re-run either one, since re-running would try to insert duplicate topics.
 
-This creates the full category/branch/topic tree (Quantitative Aptitude, Logical Reasoning, Verbal Ability, and Technical with 5 engineering branches) plus ~80 sample MCQs across 8 topics so you can test Practice and Test mode immediately. You can add more questions later through the Admin Panel.
+Together these create the full category/branch/topic tree (Quantitative Aptitude, Logical Reasoning, Verbal Ability, Data Interpretation, and Technical with 5 engineering branches) plus 150+ sample MCQs so you can test Practice and Test mode immediately. You can add more questions later through the Admin Panel.
 
 ---
 
