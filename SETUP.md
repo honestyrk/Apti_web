@@ -52,11 +52,11 @@ Each file must succeed before running the next one, since later files depend on 
 2. Copy the full contents of [`supabase/seed.sql`](supabase/seed.sql) and run it.
 3. Then run [`supabase/seed_02_expanded_topics.sql`](supabase/seed_02_expanded_topics.sql) — adds a Data Interpretation category and a much broader Quantitative Aptitude / Logical Reasoning topic list (Problems on Trains, Pipes & Cisterns, Boats & Streams, Probability, Analogy, Classification, and more).
 4. Then run [`supabase/seed_03_remaining_topics.sql`](supabase/seed_03_remaining_topics.sql) — fills in sample MCQs for every topic added in step 3 that didn't already get sample questions, so every topic in the app has practiceable content.
-5. Then run, in order: [`seed_04_quant_batch1.sql`](supabase/seed_04_quant_batch1.sql), [`seed_05_quant_batch2.sql`](supabase/seed_05_quant_batch2.sql), [`seed_06_quant_batch3.sql`](supabase/seed_06_quant_batch3.sql) — part of an ongoing pass to bring every topic up to at least 25 questions. These three bring 13 of the 32 Quantitative Aptitude topics to 25 each (5 that had zero questions, plus top-ups for Percentages, Time and Work, Problems on Trains, Pipes & Cisterns, Boats & Streams, Average, Probability, and Problems on Ages). More batches covering the rest of Quant, Logical Reasoning, Verbal Ability, Data Interpretation, and Technical > CS/IT are still in progress — check back in this file for updates as they're added.
+5. Then run, in order: `seed_04_quant_batch1.sql` through `seed_10_quant_batch7.sql` (7 files) — part of an ongoing pass to bring every topic up to at least 25 questions. Together these complete the entire **Quantitative Aptitude** category: all 32 topics now have 25+ hand-verified questions each. More batches covering Logical Reasoning, Verbal Ability, Data Interpretation, and Technical > CS/IT are still in progress — check back in this file for updates as they're added.
 
-All seed files are additive and safe to run once each, in the order listed, on a fresh database; don't re-run any of them, since re-running would try to insert duplicate topics or questions.
+All seed files are additive and safe to run once each, in the order listed (by filename number), on a fresh database; don't re-run any of them, since re-running would try to insert duplicate topics or questions.
 
-Together these create the full category/branch/topic tree (Quantitative Aptitude, Logical Reasoning, Verbal Ability, Data Interpretation, and Technical with 5 engineering branches) plus 550+ sample MCQs, so you can test Practice and Test mode immediately. You can add more questions later through the Admin Panel.
+Together these create the full category/branch/topic tree (Quantitative Aptitude, Logical Reasoning, Verbal Ability, Data Interpretation, and Technical with 5 engineering branches) plus 1100+ sample MCQs, so you can test Practice and Test mode immediately. You can add more questions later through the Admin Panel.
 
 ---
 
