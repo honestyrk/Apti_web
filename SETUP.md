@@ -1,0 +1,144 @@
+# Setup Guide — Placement Preparation Website
+
+This is a step-by-step guide to get the project running locally and deployed to production. Follow the steps in order.
+
+---
+
+## 1. Prerequisites
+
+- Node.js 18+ and npm installed
+- A [Supabase](https://supabase.com) account (free tier is enough to start)
+- A [Vercel](https://vercel.com) account
+- Git installed, and access to the GitHub repo: `https://github.com/honestyrk/Apti_web.git`
+
+---
+
+## 2. Create the Supabase project
+
+1. Go to [supabase.com/dashboard](https://supabase.com/dashboard) and click **New Project**.
+2. Choose an organization, name the project (e.g. `apti-web`), set a strong database password (save it somewhere safe), and pick a region close to your users.
+3. Wait ~2 minutes for the project to finish provisioning.
+
+---
+
+## 3. Get your API credentials
+
+1. In the Supabase dashboard, go to **Project Settings → API**.
+2. Copy the **Project URL** (looks like `https://xxxxx.supabase.co`).
+3. Copy the **`anon` `public`** key (a long JWT string). Do **not** use the `service_role` key anywhere in this project — it must never be exposed to the browser.
+
+---
+
+## 4. Run the database migrations
+
+The SQL that creates every table, security policy, view, and function lives in `supabase/migrations/`. Run them **in this exact order** using the Supabase SQL Editor:
+
+1. In the Supabase dashboard, go to **SQL Editor → New query**.
+2. Open [`supabase/migrations/0001_init_schema.sql`](supabase/migrations/0001_init_schema.sql) from this repo, copy its full contents, paste into the SQL editor, and click **Run**.
+3. Repeat for [`supabase/migrations/0002_rls_policies.sql`](supabase/migrations/0002_rls_policies.sql).
+4. Repeat for [`supabase/migrations/0003_views.sql`](supabase/migrations/0003_views.sql).
+5. Repeat for [`supabase/migrations/0004_functions.sql`](supabase/migrations/0004_functions.sql).
+
+Each file must succeed before running the next one, since later files depend on tables/functions created earlier.
+
+> **Alternative (Supabase CLI):** if you have the [Supabase CLI](https://supabase.com/docs/guides/cli) installed, you can instead run `supabase link --project-ref <your-project-ref>` followed by `supabase db push` from the project root, which applies all files in `supabase/migrations/` in order automatically.
+
+---
+
+## 5. Load the sample question bank (seed data)
+
+1. In the SQL Editor, open a **New query**.
+2. Copy the full contents of [`supabase/seed.sql`](supabase/seed.sql) and run it.
+
+This creates the full category/branch/topic tree (Quantitative Aptitude, Logical Reasoning, Verbal Ability, and Technical with 5 engineering branches) plus ~80 sample MCQs across 8 topics so you can test Practice and Test mode immediately. You can add more questions later through the Admin Panel.
+
+---
+
+## 6. Configure Auth settings
+
+1. In the Supabase dashboard, go to **Authentication → Providers → Email**, and confirm Email provider is enabled (it is by default).
+2. For frictionless testing without setting up an SMTP provider, go to **Authentication → Sign In / Providers → Email** and turn **off** "Confirm email" so new signups can log in immediately. (Revisit this before opening the site to real users — email confirmation is a normal anti-abuse measure.)
+3. This app only uses email/password authentication — no other providers need to be configured.
+
+---
+
+## 7. Set up local environment variables
+
+1. In the project root, copy the example env file:
+   ```
+   cp .env.example .env.local
+   ```
+   (On Windows PowerShell: `Copy-Item .env.example .env.local`)
+2. Open `.env.local` and fill in the two values from Step 3:
+   ```
+   VITE_SUPABASE_URL=https://xxxxx.supabase.co
+   VITE_SUPABASE_ANON_KEY=your-anon-public-key
+   ```
+   `.env.local` is already gitignored — it will never be committed.
+
+---
+
+## 8. Install dependencies and run locally
+
+```
+npm install
+npm run dev
+```
+
+Open the printed local URL (usually `http://localhost:5173`) in your browser.
+
+---
+
+## 9. Create your first admin user
+
+Regular signups always get the `user` role — nobody can promote themselves to `admin` through the app (this is enforced by a database trigger). To make yourself an admin:
+
+1. Sign up for an account through the running app (Step 8).
+2. In the Supabase dashboard, go to **SQL Editor** and run (replacing the email):
+   ```sql
+   update public.profiles set role = 'admin' where email = 'you@example.com';
+   ```
+3. Log out and back in. You should now see the Admin Panel link in the app.
+
+---
+
+## 10. Connect the GitHub repo
+
+If you're setting this up fresh from this codebase:
+
+```
+git init
+git remote add origin https://github.com/honestyrk/Apti_web.git
+git add .
+git commit -m "Initial commit"
+git branch -M main
+git push -u origin main
+```
+
+(If you're continuing from an existing local repo already connected to this remote, just commit and push as usual.)
+
+---
+
+## 11. Deploy to Vercel
+
+1. Go to [vercel.com/new](https://vercel.com/new) and import the `honestyrk/Apti_web` GitHub repository.
+2. Vercel should auto-detect the **Vite** framework preset. Confirm:
+   - **Build command:** `npm run build`
+   - **Output directory:** `dist`
+3. Under **Environment Variables**, add the same two variables from Step 7 (apply to Production, Preview, and Development):
+   - `VITE_SUPABASE_URL`
+   - `VITE_SUPABASE_ANON_KEY`
+4. Click **Deploy**. Every future push to `main` will auto-deploy; pull requests get their own preview URLs automatically.
+
+---
+
+## 12. Verify everything works end-to-end
+
+- [ ] Sign up for a new account and log in.
+- [ ] Browse Categories → a topic (try Technical → CS/IT → DBMS).
+- [ ] Complete a Practice session and confirm you get instant feedback with explanations.
+- [ ] Start a Test mode mock test, let the timer run, and confirm it auto-submits and shows a scored review.
+- [ ] Check the Dashboard reflects your accuracy stats.
+- [ ] Log in as your admin account and add a new question — confirm it's immediately practiceable by a regular user.
+
+If any step fails, double check that all four migration files ran successfully and in order, and that both environment variables are set correctly in both `.env.local` and Vercel.
