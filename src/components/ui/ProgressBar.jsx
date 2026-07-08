@@ -7,7 +7,7 @@ export default function ProgressBar({ value = 0, className = '', tone = 'brand' 
     danger: 'bg-red-500',
   }
   return (
-    <div className={`h-2 w-full overflow-hidden rounded-full bg-slate-100 ${className}`}>
+    <div className={`h-2 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800 ${className}`}>
       <div
         className={`h-full rounded-full transition-all ${tones[tone]}`}
         style={{ width: `${pct}%` }}

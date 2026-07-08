@@ -86,10 +86,10 @@ export default function AdminTopicsPage() {
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
-      <h1 className="text-2xl font-bold text-slate-900">Manage topics</h1>
-      <p className="mt-1 text-slate-500">Categories are fixed; manage branches and topics below.</p>
+      <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Manage topics</h1>
+      <p className="mt-1 text-slate-500 dark:text-slate-400">Categories are fixed; manage branches and topics below.</p>
 
-      {error && <p className="mt-4 text-sm text-red-600">{error}</p>}
+      {error && <p className="mt-4 text-sm text-red-600 dark:text-red-400">{error}</p>}
 
       <div className="mt-6 flex flex-wrap gap-3">
         {categories.map((c) => (
@@ -97,7 +97,9 @@ export default function AdminTopicsPage() {
             key={c.id}
             onClick={() => setCategoryId(c.id)}
             className={`rounded-lg border px-4 py-2 text-sm font-medium ${
-              categoryId === c.id ? 'border-brand-600 bg-brand-50 text-brand-800' : 'border-slate-300 text-slate-600 hover:bg-slate-50'
+              categoryId === c.id
+                ? 'border-brand-600 bg-brand-50 text-brand-800 dark:border-brand-500 dark:bg-brand-900/30 dark:text-brand-200'
+                : 'border-slate-300 text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800'
             }`}
           >
             {c.name}
@@ -107,7 +109,7 @@ export default function AdminTopicsPage() {
 
       {categoryId && selectedCategory?.has_branches && (
         <Card className="mt-6 p-5">
-          <h2 className="font-semibold text-slate-800">Branches</h2>
+          <h2 className="font-semibold text-slate-800 dark:text-slate-100">Branches</h2>
           {loadingBranches ? (
             <Spinner size="sm" className="mt-3" />
           ) : (
@@ -117,7 +119,9 @@ export default function AdminTopicsPage() {
                   key={b.id}
                   onClick={() => setBranchId(b.id)}
                   className={`rounded-lg border px-3 py-1.5 text-sm ${
-                    branchId === b.id ? 'border-brand-600 bg-brand-50 text-brand-800' : 'border-slate-300 text-slate-600 hover:bg-slate-50'
+                    branchId === b.id
+                      ? 'border-brand-600 bg-brand-50 text-brand-800 dark:border-brand-500 dark:bg-brand-900/30 dark:text-brand-200'
+                      : 'border-slate-300 text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800'
                   }`}
                 >
                   {b.name}
@@ -130,7 +134,7 @@ export default function AdminTopicsPage() {
               value={newBranchName}
               onChange={(e) => setNewBranchName(e.target.value)}
               placeholder="New branch name"
-              className="w-full max-w-xs rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+              className="w-full max-w-xs rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 dark:border-slate-700 dark:bg-slate-800 dark:text-white"
             />
             <Button type="submit" size="sm" variant="outline">Add branch</Button>
           </form>
@@ -139,15 +143,15 @@ export default function AdminTopicsPage() {
 
       {categoryId && (!selectedCategory?.has_branches || branchId) && (
         <Card className="mt-6 p-5">
-          <h2 className="font-semibold text-slate-800">Topics</h2>
+          <h2 className="font-semibold text-slate-800 dark:text-slate-100">Topics</h2>
           {loadingTopics ? (
             <Spinner size="sm" className="mt-3" />
           ) : (
-            <div className="mt-3 divide-y divide-slate-100">
-              {topics.length === 0 && <p className="py-2 text-sm text-slate-500">No topics yet.</p>}
+            <div className="mt-3 divide-y divide-slate-100 dark:divide-slate-800">
+              {topics.length === 0 && <p className="py-2 text-sm text-slate-500 dark:text-slate-400">No topics yet.</p>}
               {topics.map((t) => (
                 <div key={t.id} className="flex items-center justify-between py-2">
-                  <span className="text-sm text-slate-700">{t.name}</span>
+                  <span className="text-sm text-slate-700 dark:text-slate-300">{t.name}</span>
                   <Button size="sm" variant="danger" onClick={() => handleDeleteTopic(t.id)}>Delete</Button>
                 </div>
               ))}
@@ -158,7 +162,7 @@ export default function AdminTopicsPage() {
               value={newTopicName}
               onChange={(e) => setNewTopicName(e.target.value)}
               placeholder="New topic name"
-              className="w-full max-w-xs rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+              className="w-full max-w-xs rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 dark:border-slate-700 dark:bg-slate-800 dark:text-white"
             />
             <Button type="submit" size="sm" variant="outline">Add topic</Button>
           </form>

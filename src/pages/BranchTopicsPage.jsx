@@ -47,19 +47,19 @@ export default function BranchTopicsPage() {
   }
 
   if (!category || !branch) {
-    return <p className="mx-auto max-w-6xl px-4 py-10 text-slate-500">Branch not found.</p>
+    return <p className="mx-auto max-w-6xl px-4 py-10 text-slate-500 dark:text-slate-400">Branch not found.</p>
   }
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
-      <nav className="text-sm text-slate-500">
-        <Link to="/categories" className="hover:text-brand-700">Categories</Link>
+      <nav className="text-sm text-slate-500 dark:text-slate-400">
+        <Link to="/categories" className="hover:text-brand-700 dark:hover:text-brand-300">Categories</Link>
         <span className="mx-1">/</span>
-        <Link to={`/categories/${category.slug}`} className="hover:text-brand-700">{category.name}</Link>
+        <Link to={`/categories/${category.slug}`} className="hover:text-brand-700 dark:hover:text-brand-300">{category.name}</Link>
         <span className="mx-1">/</span>
-        <span className="text-slate-700">{branch.name}</span>
+        <span className="text-slate-700 dark:text-slate-300">{branch.name}</span>
       </nav>
-      <h1 className="mt-2 text-2xl font-bold text-slate-900">{branch.name}</h1>
+      <h1 className="mt-2 text-2xl font-bold text-slate-900 dark:text-white">{branch.name}</h1>
 
       <TopicGrid topics={topics} />
     </div>

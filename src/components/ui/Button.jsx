@@ -7,8 +7,8 @@ const variants = {
   accent:
     'bg-accent-500 text-white shadow-sm hover:bg-accent-600 hover:shadow-md focus-visible:outline-accent-500 active:bg-accent-700',
   outline:
-    'border border-slate-200 text-slate-700 bg-white hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-brand-700',
-  ghost: 'text-slate-600 hover:bg-slate-100 focus-visible:outline-brand-700',
+    'border border-slate-200 text-slate-700 bg-white hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-brand-700 dark:border-slate-700 dark:text-slate-200 dark:bg-slate-900 dark:hover:border-slate-600 dark:hover:bg-slate-800',
+  ghost: 'text-slate-600 hover:bg-slate-100 focus-visible:outline-brand-700 dark:text-slate-300 dark:hover:bg-slate-800',
   danger:
     'bg-red-600 text-white shadow-sm hover:bg-red-700 hover:shadow-md focus-visible:outline-red-600',
 }

@@ -53,8 +53,8 @@ export default function DashboardPage() {
     <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Welcome back{profile?.full_name ? `, ${profile.full_name.split(' ')[0]}` : ''}</h1>
-          <p className="mt-1 text-slate-500">Here's how your preparation is going.</p>
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Welcome back{profile?.full_name ? `, ${profile.full_name.split(' ')[0]}` : ''}</h1>
+          <p className="mt-1 text-slate-500 dark:text-slate-400">Here's how your preparation is going.</p>
         </div>
         <div className="flex gap-3">
           <Link to="/categories"><Button variant="outline">Practice</Button></Link>
@@ -71,13 +71,13 @@ export default function DashboardPage() {
 
       <div className="mt-10 grid gap-8 lg:grid-cols-2">
         <div>
-          <h2 className="mb-3 text-lg font-semibold text-slate-900">Topic-wise accuracy</h2>
+          <h2 className="mb-3 text-lg font-semibold text-slate-900 dark:text-white">Topic-wise accuracy</h2>
           <TopicAccuracyList rows={progressRows.slice(0, 8)} />
         </div>
         <div>
           <div className="mb-3 flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-slate-900">Recent activity</h2>
-            <Link to="/history" className="text-sm font-medium text-brand-700 hover:underline">View all</Link>
+            <h2 className="text-lg font-semibold text-slate-900 dark:text-white">Recent activity</h2>
+            <Link to="/history" className="text-sm font-medium text-brand-700 hover:underline dark:text-brand-300">View all</Link>
           </div>
           <RecentAttemptsList attempts={recentAttempts} />
         </div>

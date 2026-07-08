@@ -18,26 +18,26 @@ export default function CategoryDetailPage() {
   }
 
   if (!category) {
-    return <p className="mx-auto max-w-6xl px-4 py-10 text-slate-500">Category not found.</p>
+    return <p className="mx-auto max-w-6xl px-4 py-10 text-slate-500 dark:text-slate-400">Category not found.</p>
   }
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
-      <nav className="text-sm text-slate-500">
-        <Link to="/categories" className="hover:text-brand-700">Categories</Link>
+      <nav className="text-sm text-slate-500 dark:text-slate-400">
+        <Link to="/categories" className="hover:text-brand-700 dark:hover:text-brand-300">Categories</Link>
         <span className="mx-1">/</span>
-        <span className="text-slate-700">{category.name}</span>
+        <span className="text-slate-700 dark:text-slate-300">{category.name}</span>
       </nav>
-      <h1 className="mt-2 text-2xl font-bold text-slate-900">{category.name}</h1>
-      {category.description && <p className="mt-1 text-slate-500">{category.description}</p>}
+      <h1 className="mt-2 text-2xl font-bold text-slate-900 dark:text-white">{category.name}</h1>
+      {category.description && <p className="mt-1 text-slate-500 dark:text-slate-400">{category.description}</p>}
 
       {category.has_branches ? (
         <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {branches.map((b) => (
             <Link key={b.id} to={`/categories/${category.slug}/branches/${b.slug}`}>
-              <Card className="h-full p-6 transition-shadow hover:shadow-md">
-                <h2 className="font-semibold text-slate-900">{b.name}</h2>
-                {b.description && <p className="mt-1 text-sm text-slate-500">{b.description}</p>}
+              <Card hover className="h-full p-6">
+                <h2 className="font-semibold text-slate-900 dark:text-white">{b.name}</h2>
+                {b.description && <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{b.description}</p>}
               </Card>
             </Link>
           ))}
@@ -51,15 +51,15 @@ export default function CategoryDetailPage() {
 
 export function TopicGrid({ topics }) {
   if (topics.length === 0) {
-    return <p className="mt-8 text-slate-500">No topics available yet.</p>
+    return <p className="mt-8 text-slate-500 dark:text-slate-400">No topics available yet.</p>
   }
   return (
     <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {topics.map((t) => (
         <Card key={t.id} className="flex flex-col justify-between p-5">
           <div>
-            <h3 className="font-semibold text-slate-900">{t.name}</h3>
-            {t.description && <p className="mt-1 text-sm text-slate-500">{t.description}</p>}
+            <h3 className="font-semibold text-slate-900 dark:text-white">{t.name}</h3>
+            {t.description && <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{t.description}</p>}
           </div>
           <div className="mt-4 flex gap-2">
             <Link
@@ -70,7 +70,7 @@ export function TopicGrid({ topics }) {
             </Link>
             <Link
               to={`/test/setup/${t.id}`}
-              className="flex-1 rounded-lg border border-slate-300 px-3 py-2 text-center text-sm font-medium text-slate-700 hover:bg-slate-50"
+              className="flex-1 rounded-lg border border-slate-300 px-3 py-2 text-center text-sm font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
             >
               Take Test
             </Link>

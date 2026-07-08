@@ -93,18 +93,18 @@ export default function HomePage() {
 
       <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="font-heading text-3xl font-bold tracking-tight text-slate-900">Everything you need to prepare</h2>
-          <p className="mt-3 text-slate-500">A focused toolkit for aptitude, reasoning, verbal, and technical rounds.</p>
+          <h2 className="font-heading text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Everything you need to prepare</h2>
+          <p className="mt-3 text-slate-500 dark:text-slate-400">A focused toolkit for aptitude, reasoning, verbal, and technical rounds.</p>
         </div>
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {features.map((f) => (
             <Card key={f.title} hover className="p-6">
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-50 text-xl">
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-50 text-xl dark:bg-brand-900/40">
                 {f.icon}
               </div>
-              <h3 className="mt-4 font-heading font-semibold text-slate-900">{f.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-slate-500">{f.description}</p>
+              <h3 className="mt-4 font-heading font-semibold text-slate-900 dark:text-white">{f.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-slate-500 dark:text-slate-400">{f.description}</p>
             </Card>
           ))}
         </div>

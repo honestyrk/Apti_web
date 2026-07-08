@@ -69,8 +69,8 @@ export default function TestSetupPage() {
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-10 sm:px-6">
-      <h1 className="text-2xl font-bold text-slate-900">Set up your mock test</h1>
-      <p className="mt-1 text-slate-500">
+      <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Set up your mock test</h1>
+      <p className="mt-1 text-slate-500 dark:text-slate-400">
         {presetTopic ? `Topic-wise test: ${presetTopic.name}` : 'Choose a scope, question count, and duration.'}
       </p>
 
@@ -78,7 +78,7 @@ export default function TestSetupPage() {
         {!presetTopicId && (
           <>
             <div>
-              <label className="mb-1 block text-sm font-medium text-slate-700">Category</label>
+              <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Category</label>
               <select
                 value={categoryId}
                 onChange={(e) => {
@@ -86,7 +86,7 @@ export default function TestSetupPage() {
                   setBranchId('')
                   setTopicId('')
                 }}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 dark:border-slate-700 dark:bg-slate-800 dark:text-white"
               >
                 <option value="">Full-length (all categories)</option>
                 {categories.map((c) => (
@@ -97,14 +97,14 @@ export default function TestSetupPage() {
 
             {selectedCategory?.has_branches && (
               <div>
-                <label className="mb-1 block text-sm font-medium text-slate-700">Branch</label>
+                <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Branch</label>
                 <select
                   value={branchId}
                   onChange={(e) => {
                     setBranchId(e.target.value)
                     setTopicId('')
                   }}
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                 >
                   <option value="">All branches</option>
                   {branches.map((b) => (
@@ -116,11 +116,11 @@ export default function TestSetupPage() {
 
             {categoryId && (
               <div>
-                <label className="mb-1 block text-sm font-medium text-slate-700">Topic (optional)</label>
+                <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Topic (optional)</label>
                 <select
                   value={topicId}
                   onChange={(e) => setTopicId(e.target.value)}
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                 >
                   <option value="">All topics in this scope</option>
                   {topics.map((t) => (
@@ -133,7 +133,7 @@ export default function TestSetupPage() {
         )}
 
         <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700">Number of questions</label>
+          <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Number of questions</label>
           <div className="flex gap-2">
             {COUNTS.map((c) => (
               <button
@@ -141,7 +141,9 @@ export default function TestSetupPage() {
                 type="button"
                 onClick={() => setQuestionCount(c)}
                 className={`rounded-lg border px-4 py-2 text-sm font-medium ${
-                  questionCount === c ? 'border-brand-600 bg-brand-50 text-brand-800' : 'border-slate-300 text-slate-600 hover:bg-slate-50'
+                  questionCount === c
+                    ? 'border-brand-600 bg-brand-50 text-brand-800 dark:border-brand-500 dark:bg-brand-900/30 dark:text-brand-200'
+                    : 'border-slate-300 text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800'
                 }`}
               >
                 {c}
@@ -151,7 +153,7 @@ export default function TestSetupPage() {
         </div>
 
         <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700">Duration</label>
+          <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Duration</label>
           <div className="flex flex-wrap gap-2">
             {DURATIONS.map((d) => (
               <button
@@ -159,7 +161,9 @@ export default function TestSetupPage() {
                 type="button"
                 onClick={() => setDuration(d.seconds)}
                 className={`rounded-lg border px-4 py-2 text-sm font-medium ${
-                  duration === d.seconds ? 'border-brand-600 bg-brand-50 text-brand-800' : 'border-slate-300 text-slate-600 hover:bg-slate-50'
+                  duration === d.seconds
+                    ? 'border-brand-600 bg-brand-50 text-brand-800 dark:border-brand-500 dark:bg-brand-900/30 dark:text-brand-200'
+                    : 'border-slate-300 text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800'
                 }`}
               >
                 {d.label}
@@ -168,7 +172,7 @@ export default function TestSetupPage() {
           </div>
         </div>
 
-        {error && <p className="text-sm text-red-600">{error}</p>}
+        {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
 
         <Button className="w-full" size="lg" onClick={handleStart} loading={starting}>
           Start test

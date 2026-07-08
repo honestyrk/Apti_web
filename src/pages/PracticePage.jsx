@@ -33,13 +33,13 @@ export default function PracticePage() {
   }
 
   if (error) {
-    return <p className="mx-auto max-w-2xl px-4 py-10 text-red-600">{error}</p>
+    return <p className="mx-auto max-w-2xl px-4 py-10 text-red-600 dark:text-red-400">{error}</p>
   }
 
   if (total === 0) {
     return (
       <div className="mx-auto max-w-2xl px-4 py-10 text-center">
-        <p className="text-slate-500">No questions available for this topic yet.</p>
+        <p className="text-slate-500 dark:text-slate-400">No questions available for this topic yet.</p>
         <Link to="/categories" className="mt-4 inline-block"><Button variant="outline">Back to categories</Button></Link>
       </div>
     )
@@ -49,20 +49,20 @@ export default function PracticePage() {
     return (
       <div className="mx-auto max-w-lg px-4 py-16 text-center">
         <Card className="p-8">
-          <h1 className="text-2xl font-bold text-slate-900">Practice complete!</h1>
-          <p className="mt-2 text-slate-500">{topic?.name}</p>
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Practice complete!</h1>
+          <p className="mt-2 text-slate-500 dark:text-slate-400">{topic?.name}</p>
           <div className="mt-6 grid grid-cols-3 gap-4">
             <div>
-              <p className="text-2xl font-bold text-brand-800">{summary?.correct_count ?? correctCount}</p>
-              <p className="text-xs text-slate-500">Correct</p>
+              <p className="text-2xl font-bold text-brand-800 dark:text-brand-300">{summary?.correct_count ?? correctCount}</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Correct</p>
             </div>
             <div>
-              <p className="text-2xl font-bold text-slate-700">{summary?.incorrect_count ?? attemptedCount - correctCount}</p>
-              <p className="text-xs text-slate-500">Incorrect</p>
+              <p className="text-2xl font-bold text-slate-700 dark:text-slate-200">{summary?.incorrect_count ?? attemptedCount - correctCount}</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Incorrect</p>
             </div>
             <div>
-              <p className="text-2xl font-bold text-accent-600">{summary?.score ?? 0}%</p>
-              <p className="text-xs text-slate-500">Accuracy</p>
+              <p className="text-2xl font-bold text-accent-600 dark:text-accent-400">{summary?.score ?? 0}%</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Accuracy</p>
             </div>
           </div>
           <div className="mt-8 flex justify-center gap-3">
@@ -77,7 +77,7 @@ export default function PracticePage() {
   return (
     <div className="mx-auto max-w-2xl px-4 py-8 sm:px-6">
       <div className="mb-4">
-        <p className="text-sm font-medium text-slate-500">{topic?.name} · Practice Mode</p>
+        <p className="text-sm font-medium text-slate-500 dark:text-slate-400">{topic?.name} · Practice Mode</p>
         <ProgressBar value={(index / total) * 100} className="mt-2" />
       </div>
 
@@ -96,7 +96,7 @@ export default function PracticePage() {
         />
 
         <div className="mt-6 flex items-center justify-between">
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-slate-500 dark:text-slate-400">
             {correctCount}/{attemptedCount} correct so far
           </p>
           {revealed && (

@@ -16,11 +16,11 @@ export default function QuestionCard({
 }) {
   return (
     <div>
-      <div className="flex items-center justify-between text-sm text-slate-500">
+      <div className="flex items-center justify-between text-sm text-slate-500 dark:text-slate-400">
         <span>Question {index + 1} of {total}</span>
         {question.difficulty && <DifficultyBadge difficulty={question.difficulty} />}
       </div>
-      <h2 className="mt-2 text-lg font-medium text-slate-900">{question.question_text}</h2>
+      <h2 className="mt-2 text-lg font-medium text-slate-900 dark:text-white">{question.question_text}</h2>
 
       <OptionsList
         question={question}

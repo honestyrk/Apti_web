@@ -60,13 +60,13 @@ export default function ResultsPage() {
   }
 
   if (error) {
-    return <p className="mx-auto max-w-2xl px-4 py-10 text-red-600">{error}</p>
+    return <p className="mx-auto max-w-2xl px-4 py-10 text-red-600 dark:text-red-400">{error}</p>
   }
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
       <Card className="p-6">
-        <h1 className="text-2xl font-bold text-slate-900">
+        <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
           {attempt.status === 'auto_submitted'
             ? "Time's up — Test auto-submitted"
             : attempt.mode === 'practice'
@@ -75,58 +75,58 @@ export default function ResultsPage() {
         </h1>
         <div className="mt-6 grid grid-cols-4 gap-4 text-center">
           <div>
-            <p className="text-2xl font-bold text-brand-800">{attempt.score}%</p>
-            <p className="text-xs text-slate-500">Score</p>
+            <p className="text-2xl font-bold text-brand-800 dark:text-brand-300">{attempt.score}%</p>
+            <p className="text-xs text-slate-500 dark:text-slate-400">Score</p>
           </div>
           <div>
-            <p className="text-2xl font-bold text-emerald-600">{attempt.correct_count}</p>
-            <p className="text-xs text-slate-500">Correct</p>
+            <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">{attempt.correct_count}</p>
+            <p className="text-xs text-slate-500 dark:text-slate-400">Correct</p>
           </div>
           <div>
-            <p className="text-2xl font-bold text-red-600">{attempt.incorrect_count}</p>
-            <p className="text-xs text-slate-500">Incorrect</p>
+            <p className="text-2xl font-bold text-red-600 dark:text-red-400">{attempt.incorrect_count}</p>
+            <p className="text-xs text-slate-500 dark:text-slate-400">Incorrect</p>
           </div>
           <div>
-            <p className="text-2xl font-bold text-slate-500">{attempt.unanswered_count}</p>
-            <p className="text-xs text-slate-500">Unanswered</p>
+            <p className="text-2xl font-bold text-slate-500 dark:text-slate-400">{attempt.unanswered_count}</p>
+            <p className="text-xs text-slate-500 dark:text-slate-400">Unanswered</p>
           </div>
         </div>
       </Card>
 
-      <h2 className="mt-8 text-lg font-semibold text-slate-900">Review</h2>
+      <h2 className="mt-8 text-lg font-semibold text-slate-900 dark:text-white">Review</h2>
       <div className="mt-4 space-y-4">
         {review.map((q) => (
           <Card key={q.question_id} className="p-5">
-            <div className="flex items-center justify-between text-sm text-slate-500">
+            <div className="flex items-center justify-between text-sm text-slate-500 dark:text-slate-400">
               <span>Question {q.order_index + 1}</span>
               <DifficultyBadge difficulty={q.difficulty ?? 'medium'} />
             </div>
-            <p className="mt-2 font-medium text-slate-900">{q.question_text}</p>
+            <p className="mt-2 font-medium text-slate-900 dark:text-white">{q.question_text}</p>
 
             <div className="mt-3 space-y-2">
               {['a', 'b', 'c', 'd'].map((key) => {
                 const isCorrectOpt = q.correct_option === key
                 const isSelectedOpt = q.selected_option === key
-                let classes = 'border-slate-200'
-                if (isCorrectOpt) classes = 'border-emerald-400 bg-emerald-50'
-                else if (isSelectedOpt && !isCorrectOpt) classes = 'border-red-400 bg-red-50'
+                let classes = 'border-slate-200 dark:border-slate-700'
+                if (isCorrectOpt) classes = 'border-emerald-400 bg-emerald-50 dark:border-emerald-600 dark:bg-emerald-950/40'
+                else if (isSelectedOpt && !isCorrectOpt) classes = 'border-red-400 bg-red-50 dark:border-red-600 dark:bg-red-950/40'
                 return (
-                  <div key={key} className={`flex items-center gap-3 rounded-lg border-2 px-3 py-2 text-sm ${classes}`}>
+                  <div key={key} className={`flex items-center gap-3 rounded-lg border-2 px-3 py-2 text-sm text-slate-800 dark:text-slate-100 ${classes}`}>
                     <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-current text-xs font-semibold">
                       {letters[key]}
                     </span>
                     <span>{q[`option_${key}`]}</span>
-                    {isCorrectOpt && <span className="ml-auto text-emerald-600">✓ Correct</span>}
-                    {isSelectedOpt && !isCorrectOpt && <span className="ml-auto text-red-600">✗ Your answer</span>}
+                    {isCorrectOpt && <span className="ml-auto text-emerald-600 dark:text-emerald-400">✓ Correct</span>}
+                    {isSelectedOpt && !isCorrectOpt && <span className="ml-auto text-red-600 dark:text-red-400">✗ Your answer</span>}
                   </div>
                 )
               })}
-              {!q.selected_option && <p className="text-xs italic text-slate-400">You did not answer this question.</p>}
+              {!q.selected_option && <p className="text-xs italic text-slate-400 dark:text-slate-500">You did not answer this question.</p>}
             </div>
 
             {q.explanation && (
-              <div className="mt-3 rounded-lg bg-slate-50 px-4 py-3 text-sm text-slate-600">
-                <span className="font-semibold text-slate-700">Explanation: </span>
+              <div className="mt-3 rounded-lg bg-slate-50 px-4 py-3 text-sm text-slate-600 dark:bg-slate-800/60 dark:text-slate-300">
+                <span className="font-semibold text-slate-700 dark:text-slate-200">Explanation: </span>
                 {q.explanation}
               </div>
             )}

@@ -36,8 +36,8 @@ export default function HistoryPage() {
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
-      <h1 className="text-2xl font-bold text-slate-900">History</h1>
-      <p className="mt-1 text-slate-500">All your past practice sessions and tests.</p>
+      <h1 className="text-2xl font-bold text-slate-900 dark:text-white">History</h1>
+      <p className="mt-1 text-slate-500 dark:text-slate-400">All your past practice sessions and tests.</p>
 
       <div className="mt-6 flex gap-2">
         {FILTERS.map((f) => (

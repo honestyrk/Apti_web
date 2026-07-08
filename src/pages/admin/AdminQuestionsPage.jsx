@@ -52,7 +52,7 @@ export default function AdminQuestionsPage() {
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <h1 className="text-2xl font-bold text-slate-900">Manage questions</h1>
+        <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Manage questions</h1>
         <Link to="/admin/questions/new"><Button>Add question</Button></Link>
       </div>
 
@@ -61,22 +61,22 @@ export default function AdminQuestionsPage() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search question text..."
-          className="w-full max-w-sm rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+          className="w-full max-w-sm rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 dark:border-slate-700 dark:bg-slate-800 dark:text-white"
         />
         <Button type="submit" variant="outline">Search</Button>
       </form>
 
-      {error && <p className="mt-4 text-sm text-red-600">{error}</p>}
+      {error && <p className="mt-4 text-sm text-red-600 dark:text-red-400">{error}</p>}
 
       {loading ? (
         <div className="mt-10 flex justify-center"><Spinner /></div>
       ) : (
-        <Card className="mt-6 divide-y divide-slate-100">
-          {questions.length === 0 && <p className="p-6 text-sm text-slate-500">No questions found.</p>}
+        <Card className="mt-6 divide-y divide-slate-100 dark:divide-slate-800">
+          {questions.length === 0 && <p className="p-6 text-sm text-slate-500 dark:text-slate-400">No questions found.</p>}
           {questions.map((q) => (
             <div key={q.id} className="flex items-start justify-between gap-4 p-4">
               <div className="min-w-0">
-                <p className="truncate font-medium text-slate-800">{q.question_text}</p>
+                <p className="truncate font-medium text-slate-800 dark:text-slate-100">{q.question_text}</p>
                 <div className="mt-1 flex flex-wrap items-center gap-2">
                   <Badge>{q.topic_name}</Badge>
                   <DifficultyBadge difficulty={q.difficulty} />

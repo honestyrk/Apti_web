@@ -99,11 +99,11 @@ export default function TestPage() {
   }
 
   if (error) {
-    return <p className="mx-auto max-w-2xl px-4 py-10 text-red-600">{error}</p>
+    return <p className="mx-auto max-w-2xl px-4 py-10 text-red-600 dark:text-red-400">{error}</p>
   }
 
   if (!current) {
-    return <p className="mx-auto max-w-2xl px-4 py-10 text-slate-500">No questions found for this test.</p>
+    return <p className="mx-auto max-w-2xl px-4 py-10 text-slate-500 dark:text-slate-400">No questions found for this test.</p>
   }
 
   const answeredCount = Object.keys(answers).length
@@ -112,8 +112,8 @@ export default function TestPage() {
     <div className="mx-auto max-w-5xl px-4 py-6 sm:px-6">
       <div className="mb-4 flex items-center justify-between">
         <div>
-          <p className="text-sm font-medium text-slate-500">Test Mode</p>
-          <p className="text-xs text-slate-400">{answeredCount}/{questions.length} answered</p>
+          <p className="text-sm font-medium text-slate-500 dark:text-slate-400">Test Mode</p>
+          <p className="text-xs text-slate-400 dark:text-slate-500">{answeredCount}/{questions.length} answered</p>
         </div>
         <div className="flex items-center gap-3">
           <Timer label={label} low={attempt && (new Date(attempt.expires_at) - Date.now()) / 1000 < 60} />
@@ -123,11 +123,11 @@ export default function TestPage() {
 
       <div className="grid gap-6 lg:grid-cols-[1fr_240px]">
         <Card className="p-6">
-          <div className="flex items-center justify-between text-sm text-slate-500">
+          <div className="flex items-center justify-between text-sm text-slate-500 dark:text-slate-400">
             <span>Question {index + 1} of {questions.length}</span>
             {current.difficulty && <DifficultyBadge difficulty={current.difficulty} />}
           </div>
-          <h2 className="mt-2 text-lg font-medium text-slate-900">{current.question_text}</h2>
+          <h2 className="mt-2 text-lg font-medium text-slate-900 dark:text-white">{current.question_text}</h2>
 
           <OptionsList
             question={current}
@@ -153,7 +153,7 @@ export default function TestPage() {
         </Card>
 
         <Card className="h-fit p-4">
-          <p className="mb-3 text-sm font-medium text-slate-700">Questions</p>
+          <p className="mb-3 text-sm font-medium text-slate-700 dark:text-slate-300">Questions</p>
           <div className="grid grid-cols-5 gap-2">
             {questions.map((q, i) => {
               const isAnswered = Boolean(answers[q.question_id])
@@ -165,8 +165,8 @@ export default function TestPage() {
                     i === index
                       ? 'bg-brand-700 text-white'
                       : isAnswered
-                        ? 'bg-accent-100 text-accent-800'
-                        : 'bg-slate-100 text-slate-500'
+                        ? 'bg-accent-100 text-accent-800 dark:bg-accent-900/40 dark:text-accent-200'
+                        : 'bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400'
                   }`}
                 >
                   {i + 1}
@@ -190,7 +190,7 @@ export default function TestPage() {
           </>
         }
       >
-        <p className="text-sm text-slate-600">
+        <p className="text-sm text-slate-600 dark:text-slate-300">
           You've answered {answeredCount} of {questions.length} questions. Once submitted, you can't change your answers.
         </p>
       </Modal>

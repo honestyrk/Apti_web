@@ -18,6 +18,9 @@ const emptyForm = {
   is_active: true,
 }
 
+const inputClass =
+  'w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 dark:border-slate-700 dark:bg-slate-800 dark:text-white'
+
 export default function AdminQuestionFormPage() {
   const { id } = useParams()
   const isEdit = Boolean(id)
@@ -113,17 +116,17 @@ export default function AdminQuestionFormPage() {
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-10 sm:px-6">
-      <h1 className="text-2xl font-bold text-slate-900">{isEdit ? 'Edit question' : 'Add question'}</h1>
+      <h1 className="text-2xl font-bold text-slate-900 dark:text-white">{isEdit ? 'Edit question' : 'Add question'}</h1>
 
       <Card className="mt-6 p-6">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="mb-1 block text-sm font-medium text-slate-700">Topic</label>
+            <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Topic</label>
             <select
               required
               value={form.topic_id}
               onChange={update('topic_id')}
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+              className={inputClass}
             >
               <option value="">Select a topic</option>
               {topicOptions.map((t) => (
@@ -133,13 +136,13 @@ export default function AdminQuestionFormPage() {
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium text-slate-700">Question text</label>
+            <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Question text</label>
             <textarea
               required
               rows={3}
               value={form.question_text}
               onChange={update('question_text')}
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+              className={inputClass}
             />
           </div>
 
@@ -158,28 +161,28 @@ export default function AdminQuestionFormPage() {
                 value={form[`option_${key}`]}
                 onChange={update(`option_${key}`)}
                 placeholder={`Option ${key.toUpperCase()}`}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                className={inputClass}
               />
             </div>
           ))}
-          <p className="text-xs text-slate-400">Select the radio button next to the correct option.</p>
+          <p className="text-xs text-slate-400 dark:text-slate-500">Select the radio button next to the correct option.</p>
 
           <div>
-            <label className="mb-1 block text-sm font-medium text-slate-700">Explanation</label>
+            <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Explanation</label>
             <textarea
               rows={2}
               value={form.explanation}
               onChange={update('explanation')}
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+              className={inputClass}
             />
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium text-slate-700">Difficulty</label>
+            <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Difficulty</label>
             <select
               value={form.difficulty}
               onChange={update('difficulty')}
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+              className={inputClass}
             >
               <option value="easy">Easy</option>
               <option value="medium">Medium</option>
@@ -188,13 +191,13 @@ export default function AdminQuestionFormPage() {
           </div>
 
           {isEdit && (
-            <label className="flex items-center gap-2 text-sm text-slate-700">
+            <label className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
               <input type="checkbox" checked={form.is_active} onChange={update('is_active')} className="h-4 w-4" />
               Active (visible in practice/tests)
             </label>
           )}
 
-          {error && <p className="text-sm text-red-600">{error}</p>}
+          {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
 
           <div className="flex gap-3">
             <Button type="submit" loading={saving}>{isEdit ? 'Save changes' : 'Create question'}</Button>
