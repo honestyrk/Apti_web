@@ -142,9 +142,13 @@ export default function TestPage() {
             <Button variant="outline" disabled={index === 0} onClick={() => setIndex((i) => i - 1)}>
               Previous
             </Button>
-            <Button disabled={index + 1 >= questions.length} onClick={() => setIndex((i) => i + 1)}>
-              Next
-            </Button>
+            {index + 1 >= questions.length ? (
+              <Button variant="danger" onClick={() => setConfirmOpen(true)}>
+                Submit test
+              </Button>
+            ) : (
+              <Button onClick={() => setIndex((i) => i + 1)}>Next</Button>
+            )}
           </div>
         </Card>
 
