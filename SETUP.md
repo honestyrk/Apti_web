@@ -39,6 +39,7 @@ The SQL that creates every table, security policy, view, and function lives in `
 4. Repeat for [`supabase/migrations/0003_views.sql`](supabase/migrations/0003_views.sql).
 5. Repeat for [`supabase/migrations/0004_functions.sql`](supabase/migrations/0004_functions.sql).
 6. Repeat for [`supabase/migrations/0005_fix_view_grants.sql`](supabase/migrations/0005_fix_view_grants.sql) (closes a gap where Supabase's default privileges made the question bank readable by unauthenticated requests).
+7. Repeat for [`supabase/migrations/0006_fix_progress_view.sql`](supabase/migrations/0006_fix_progress_view.sql) (fixes a bug where the Dashboard's "Overall accuracy" and "Questions attempted" stats were stuck at 0 for every user, because the underlying view had no permission to read the column it needed).
 
 Each file must succeed before running the next one, since later files depend on tables/functions created earlier.
 

@@ -13,17 +13,30 @@ export default function DashboardPage() {
   const [progressRows, setProgressRows] = useState([])
   const [recentAttempts, setRecentAttempts] = useState([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
 
   useEffect(() => {
     let mounted = true
     async function load() {
       setLoading(true)
-      const [{ data: progress }, { data: topics }, { data: attempts }] = await Promise.all([
+      setError('')
+      const [
+        { data: progress, error: progressError },
+        { data: topics, error: topicsError },
+        { data: attempts, error: attemptsError },
+      ] = await Promise.all([
         supabase.from('user_topic_progress').select('*'),
         supabase.from('topics').select('id, name'),
         supabase.from('test_attempts').select('*').order('started_at', { ascending: false }).limit(6),
       ])
       if (!mounted) return
+
+      const firstError = progressError || topicsError || attemptsError
+      if (firstError) {
+        setError(firstError.message)
+        setLoading(false)
+        return
+      }
 
       const topicNameById = new Map((topics ?? []).map((t) => [t.id, t.name]))
       const rows = (progress ?? [])
@@ -42,6 +55,10 @@ export default function DashboardPage() {
 
   if (loading) {
     return <div className="flex min-h-[60vh] items-center justify-center"><Spinner /></div>
+  }
+
+  if (error) {
+    return <p className="mx-auto max-w-2xl px-4 py-10 text-red-600 dark:text-red-400">{error}</p>
   }
 
   const totalAttempted = progressRows.reduce((sum, r) => sum + r.questions_attempted, 0)
