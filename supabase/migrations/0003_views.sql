@@ -24,6 +24,12 @@ select
 from public.questions
 where is_active = true;
 
+-- Supabase's default privileges automatically grant SELECT on newly
+-- created tables/views to anon and authenticated. Without this explicit
+-- REVOKE, an unauthenticated request could read the entire question bank
+-- (text, options, difficulty) straight off this view -- REVOKE first,
+-- then GRANT only to authenticated, so anonymous scraping is blocked.
+revoke all on public.questions_public from public, anon;
 grant select on public.questions_public to authenticated;
 
 -- ============================================================
@@ -54,4 +60,9 @@ join public.topics t on t.id = q.topic_id
 where ua.selected_option is not null
 group by ta.user_id, q.topic_id, t.category_id, t.branch_id;
 
+-- Same default-privilege concern as questions_public above. This view is
+-- already protected by security_invoker (anon has no matching rows and, in
+-- practice, no grant on the underlying `questions` table either), but the
+-- explicit REVOKE keeps the grant model consistent and self-documenting.
+revoke all on public.user_topic_progress from public, anon;
 grant select on public.user_topic_progress to authenticated;

@@ -1,16 +1,29 @@
-# React + Vite
+# PlacementPrep
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A campus placement preparation platform for practicing Quantitative Aptitude, Logical Reasoning, Verbal Ability, and branch-wise Technical MCQs — with untimed practice, timed mock tests, progress tracking, and an admin panel for managing the question bank.
 
-Currently, two official plugins are available:
+## Tech stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Frontend:** React (Vite), Tailwind CSS, React Router
+- **Backend:** Supabase (Postgres, Auth, Row Level Security)
+- **Deployment:** Vercel
 
-## React Compiler
+## Getting started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+See [SETUP.md](SETUP.md) for the full step-by-step setup guide, covering Supabase project creation, running database migrations, environment variables, and deployment.
 
-## Expanding the Oxlint configuration
+Quick local start once your `.env.local` is configured:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+```
+npm install
+npm run dev
+```
+
+## Project structure
+
+- `src/pages/` — route-level pages (auth, browsing, practice, test, dashboard, admin)
+- `src/components/` — layout, UI primitives, and question-rendering components
+- `src/hooks/` — data-fetching and session-state hooks
+- `src/context/AuthContext.jsx` — auth/profile state
+- `supabase/migrations/` — SQL schema, RLS policies, views, and RPC functions
+- `supabase/seed.sql` — category/topic tree and sample question bank

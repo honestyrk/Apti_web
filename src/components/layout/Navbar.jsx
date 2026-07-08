@@ -1,0 +1,98 @@
+import { useState } from 'react'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { useAuth } from '../../context/AuthContext'
+import Button from '../ui/Button'
+
+const navLinkClass = ({ isActive }) =>
+  `rounded-md px-3 py-2 text-sm font-medium transition-colors ${
+    isActive ? 'bg-brand-50 text-brand-800' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+  }`
+
+export default function Navbar() {
+  const { user, profile, isAdmin, signOut } = useAuth()
+  const [menuOpen, setMenuOpen] = useState(false)
+  const navigate = useNavigate()
+
+  const handleSignOut = async () => {
+    await signOut()
+    setMenuOpen(false)
+    navigate('/')
+  }
+
+  return (
+    <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
+        <Link to="/" className="flex items-center gap-2 text-lg font-bold text-brand-800">
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-700 text-white">P</span>
+          PlacementPrep
+        </Link>
+
+        <nav className="hidden items-center gap-1 md:flex">
+          {user && (
+            <>
+              <NavLink to="/dashboard" className={navLinkClass}>Dashboard</NavLink>
+              <NavLink to="/categories" className={navLinkClass}>Practice</NavLink>
+              <NavLink to="/test/setup" className={navLinkClass}>Mock Test</NavLink>
+              <NavLink to="/history" className={navLinkClass}>History</NavLink>
+              {isAdmin && <NavLink to="/admin" className={navLinkClass}>Admin</NavLink>}
+            </>
+          )}
+        </nav>
+
+        <div className="hidden items-center gap-3 md:flex">
+          {user ? (
+            <>
+              <Link to="/profile" className="text-sm font-medium text-slate-600 hover:text-slate-900">
+                {profile?.full_name || user.email}
+              </Link>
+              <Button variant="outline" size="sm" onClick={handleSignOut}>Sign out</Button>
+            </>
+          ) : (
+            <>
+              <Link to="/login" className="text-sm font-medium text-slate-600 hover:text-slate-900">Log in</Link>
+              <Button size="sm" onClick={() => navigate('/signup')}>Sign up</Button>
+            </>
+          )}
+        </div>
+
+        <button
+          className="rounded-md p-2 text-slate-600 hover:bg-slate-100 md:hidden"
+          onClick={() => setMenuOpen((v) => !v)}
+          aria-label="Toggle menu"
+        >
+          <span className="block h-0.5 w-5 bg-current" />
+          <span className="my-1 block h-0.5 w-5 bg-current" />
+          <span className="block h-0.5 w-5 bg-current" />
+        </button>
+      </div>
+
+      {menuOpen && (
+        <div className="border-t border-slate-200 px-4 py-3 md:hidden">
+          <div className="flex flex-col gap-1">
+            {user ? (
+              <>
+                <NavLink to="/dashboard" className={navLinkClass} onClick={() => setMenuOpen(false)}>Dashboard</NavLink>
+                <NavLink to="/categories" className={navLinkClass} onClick={() => setMenuOpen(false)}>Practice</NavLink>
+                <NavLink to="/test/setup" className={navLinkClass} onClick={() => setMenuOpen(false)}>Mock Test</NavLink>
+                <NavLink to="/history" className={navLinkClass} onClick={() => setMenuOpen(false)}>History</NavLink>
+                {isAdmin && <NavLink to="/admin" className={navLinkClass} onClick={() => setMenuOpen(false)}>Admin</NavLink>}
+                <NavLink to="/profile" className={navLinkClass} onClick={() => setMenuOpen(false)}>Profile</NavLink>
+                <button
+                  className="mt-1 rounded-md px-3 py-2 text-left text-sm font-medium text-red-600 hover:bg-red-50"
+                  onClick={handleSignOut}
+                >
+                  Sign out
+                </button>
+              </>
+            ) : (
+              <>
+                <NavLink to="/login" className={navLinkClass} onClick={() => setMenuOpen(false)}>Log in</NavLink>
+                <NavLink to="/signup" className={navLinkClass} onClick={() => setMenuOpen(false)}>Sign up</NavLink>
+              </>
+            )}
+          </div>
+        </div>
+      )}
+    </header>
+  )
+}
