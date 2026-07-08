@@ -63,10 +63,10 @@ export default function DashboardPage() {
       </div>
 
       <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
-        <StatCard label="Questions attempted" value={totalAttempted} />
-        <StatCard label="Overall accuracy" value={`${overallAccuracy}%`} tone="accent" />
-        <StatCard label="Tests taken" value={testsTaken} tone="neutral" />
-        <StatCard label="Topics practiced" value={progressRows.length} tone="neutral" />
+        <StatCard label="Questions attempted" value={totalAttempted} icon="📝" />
+        <StatCard label="Overall accuracy" value={`${overallAccuracy}%`} tone="accent" icon="🎯" />
+        <StatCard label="Tests taken" value={testsTaken} tone="neutral" icon="⏱️" />
+        <StatCard label="Topics practiced" value={progressRows.length} tone="neutral" icon="📚" />
       </div>
 
       <div className="mt-10 grid gap-8 lg:grid-cols-2">

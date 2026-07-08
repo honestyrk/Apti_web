@@ -4,8 +4,8 @@ import { useAuth } from '../../context/AuthContext'
 import Button from '../ui/Button'
 
 const navLinkClass = ({ isActive }) =>
-  `rounded-md px-3 py-2 text-sm font-medium transition-colors ${
-    isActive ? 'bg-brand-50 text-brand-800' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+  `rounded-lg px-3.5 py-2 text-sm font-medium transition-colors ${
+    isActive ? 'bg-brand-50 text-brand-800' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
   }`
 
 export default function Navbar() {
@@ -20,11 +20,15 @@ export default function Navbar() {
   }
 
   return (
-    <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
-        <Link to="/" className="flex items-center gap-2 text-lg font-bold text-brand-800">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-700 text-white">P</span>
-          PlacementPrep
+    <header className="sticky top-0 z-40 border-b border-slate-200/80 bg-white/80 backdrop-blur-md">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3.5 sm:px-6">
+        <Link to="/" className="flex items-center gap-2.5">
+          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-linear-to-br from-brand-600 to-brand-800 font-heading text-base font-bold text-white shadow-sm">
+            P
+          </span>
+          <span className="font-heading text-lg font-bold tracking-tight text-slate-900">
+            Placement<span className="text-brand-700">Prep</span>
+          </span>
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">
@@ -39,24 +43,27 @@ export default function Navbar() {
           )}
         </nav>
 
-        <div className="hidden items-center gap-3 md:flex">
+        <div className="hidden items-center gap-4 md:flex">
           {user ? (
             <>
-              <Link to="/profile" className="text-sm font-medium text-slate-600 hover:text-slate-900">
-                {profile?.full_name || user.email}
+              <Link to="/profile" className="flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-slate-900">
+                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-brand-100 text-xs font-semibold text-brand-800">
+                  {(profile?.full_name || user.email)[0]?.toUpperCase()}
+                </span>
+                {profile?.full_name?.split(' ')[0] || 'Profile'}
               </Link>
               <Button variant="outline" size="sm" onClick={handleSignOut}>Sign out</Button>
             </>
           ) : (
             <>
               <Link to="/login" className="text-sm font-medium text-slate-600 hover:text-slate-900">Log in</Link>
-              <Button size="sm" onClick={() => navigate('/signup')}>Sign up</Button>
+              <Button size="sm" onClick={() => navigate('/signup')}>Sign up free</Button>
             </>
           )}
         </div>
 
         <button
-          className="rounded-md p-2 text-slate-600 hover:bg-slate-100 md:hidden"
+          className="rounded-lg p-2 text-slate-600 hover:bg-slate-100 md:hidden"
           onClick={() => setMenuOpen((v) => !v)}
           aria-label="Toggle menu"
         >
@@ -67,7 +74,7 @@ export default function Navbar() {
       </div>
 
       {menuOpen && (
-        <div className="border-t border-slate-200 px-4 py-3 md:hidden">
+        <div className="border-t border-slate-200 bg-white px-4 py-3 md:hidden">
           <div className="flex flex-col gap-1">
             {user ? (
               <>
@@ -78,7 +85,7 @@ export default function Navbar() {
                 {isAdmin && <NavLink to="/admin" className={navLinkClass} onClick={() => setMenuOpen(false)}>Admin</NavLink>}
                 <NavLink to="/profile" className={navLinkClass} onClick={() => setMenuOpen(false)}>Profile</NavLink>
                 <button
-                  className="mt-1 rounded-md px-3 py-2 text-left text-sm font-medium text-red-600 hover:bg-red-50"
+                  className="mt-1 rounded-lg px-3.5 py-2 text-left text-sm font-medium text-red-600 hover:bg-red-50"
                   onClick={handleSignOut}
                 >
                   Sign out

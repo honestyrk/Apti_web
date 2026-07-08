@@ -38,6 +38,7 @@ The SQL that creates every table, security policy, view, and function lives in `
 3. Repeat for [`supabase/migrations/0002_rls_policies.sql`](supabase/migrations/0002_rls_policies.sql).
 4. Repeat for [`supabase/migrations/0003_views.sql`](supabase/migrations/0003_views.sql).
 5. Repeat for [`supabase/migrations/0004_functions.sql`](supabase/migrations/0004_functions.sql).
+6. Repeat for [`supabase/migrations/0005_fix_view_grants.sql`](supabase/migrations/0005_fix_view_grants.sql) (closes a gap where Supabase's default privileges made the question bank readable by unauthenticated requests).
 
 Each file must succeed before running the next one, since later files depend on tables/functions created earlier.
 
@@ -57,8 +58,9 @@ This creates the full category/branch/topic tree (Quantitative Aptitude, Logical
 ## 6. Configure Auth settings
 
 1. In the Supabase dashboard, go to **Authentication → Providers → Email**, and confirm Email provider is enabled (it is by default).
-2. For frictionless testing without setting up an SMTP provider, go to **Authentication → Sign In / Providers → Email** and turn **off** "Confirm email" so new signups can log in immediately. (Revisit this before opening the site to real users — email confirmation is a normal anti-abuse measure.)
-3. This app only uses email/password authentication — no other providers need to be configured.
+2. Leave **"Confirm email"** turned **on** (the default). The app requires users to click the confirmation link in their inbox before they can log in — after signup they'll see a "check your inbox" screen, and the login page shows a "resend confirmation email" option if they try to log in too early.
+3. Supabase sends confirmation emails via its own built-in mail service out of the box — no SMTP setup needed to test this. It's rate-limited (a handful of emails per hour), which is fine for development. Before launching to real users, configure a custom SMTP provider under **Project Settings → Auth → SMTP Settings** so confirmation emails are reliable at higher volume.
+4. This app only uses email/password authentication — no other providers need to be configured.
 
 ---
 
@@ -93,7 +95,7 @@ Open the printed local URL (usually `http://localhost:5173`) in your browser.
 
 Regular signups always get the `user` role — nobody can promote themselves to `admin` through the app (this is enforced by a database trigger). To make yourself an admin:
 
-1. Sign up for an account through the running app (Step 8).
+1. Sign up for an account through the running app (Step 8), then click the confirmation link in your email.
 2. In the Supabase dashboard, go to **SQL Editor** and run (replacing the email):
    ```sql
    update public.profiles set role = 'admin' where email = 'you@example.com';
@@ -134,11 +136,12 @@ git push -u origin main
 
 ## 12. Verify everything works end-to-end
 
-- [ ] Sign up for a new account and log in.
+- [ ] Sign up for a new account and see the "check your inbox" confirmation screen.
+- [ ] Click the confirmation link in the email, then log in successfully.
 - [ ] Browse Categories → a topic (try Technical → CS/IT → DBMS).
 - [ ] Complete a Practice session and confirm you get instant feedback with explanations.
 - [ ] Start a Test mode mock test, let the timer run, and confirm it auto-submits and shows a scored review.
 - [ ] Check the Dashboard reflects your accuracy stats.
 - [ ] Log in as your admin account and add a new question — confirm it's immediately practiceable by a regular user.
 
-If any step fails, double check that all four migration files ran successfully and in order, and that both environment variables are set correctly in both `.env.local` and Vercel.
+If any step fails, double check that all five migration files ran successfully and in order, and that both environment variables are set correctly in both `.env.local` and Vercel.
