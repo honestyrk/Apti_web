@@ -43,7 +43,8 @@ from public.categories, (values
   ('Number System', 'number-system', 6),
   ('Ratio and Proportion', 'ratio-and-proportion', 7)
 ) as t(name, slug, display_order)
-where categories.slug = 'quantitative-aptitude';
+where categories.slug = 'quantitative-aptitude'
+on conflict (category_id, slug) where branch_id is null do nothing;
 
 -- ============================================================
 -- Topics: Logical Reasoning
@@ -58,7 +59,8 @@ from public.categories, (values
   ('Direction Sense', 'direction-sense', 5),
   ('Series Completion', 'series-completion', 6)
 ) as t(name, slug, display_order)
-where categories.slug = 'logical-reasoning';
+where categories.slug = 'logical-reasoning'
+on conflict (category_id, slug) where branch_id is null do nothing;
 
 -- ============================================================
 -- Topics: Verbal Ability
@@ -72,7 +74,8 @@ from public.categories, (values
   ('Reading Comprehension', 'reading-comprehension', 4),
   ('Fill in the Blanks', 'fill-in-the-blanks', 5)
 ) as t(name, slug, display_order)
-where categories.slug = 'verbal-ability';
+where categories.slug = 'verbal-ability'
+on conflict (category_id, slug) where branch_id is null do nothing;
 
 -- ============================================================
 -- Topics: Technical > CS/IT
@@ -88,7 +91,8 @@ join public.branches b on b.category_id = c.id and b.slug = 'cs-it',
   ('Computer Networks', 'computer-networks', 4),
   ('Data Structures', 'data-structures', 5)
 ) as t(name, slug, display_order)
-where c.slug = 'technical';
+where c.slug = 'technical'
+on conflict (category_id, branch_id, slug) where branch_id is not null do nothing;
 
 -- ============================================================
 -- Topics: Technical > ECE
@@ -102,7 +106,8 @@ join public.branches b on b.category_id = c.id and b.slug = 'ece',
   ('Analog Electronics', 'analog-electronics', 2),
   ('Communication Systems', 'communication-systems', 3)
 ) as t(name, slug, display_order)
-where c.slug = 'technical';
+where c.slug = 'technical'
+on conflict (category_id, branch_id, slug) where branch_id is not null do nothing;
 
 -- ============================================================
 -- Topics: Technical > Mechanical
@@ -116,7 +121,8 @@ join public.branches b on b.category_id = c.id and b.slug = 'mechanical',
   ('Strength of Materials', 'strength-of-materials', 2),
   ('Fluid Mechanics', 'fluid-mechanics', 3)
 ) as t(name, slug, display_order)
-where c.slug = 'technical';
+where c.slug = 'technical'
+on conflict (category_id, branch_id, slug) where branch_id is not null do nothing;
 
 -- ============================================================
 -- Topics: Technical > Civil
@@ -130,7 +136,8 @@ join public.branches b on b.category_id = c.id and b.slug = 'civil',
   ('Surveying', 'surveying', 2),
   ('Building Materials', 'building-materials', 3)
 ) as t(name, slug, display_order)
-where c.slug = 'technical';
+where c.slug = 'technical'
+on conflict (category_id, branch_id, slug) where branch_id is not null do nothing;
 
 -- ============================================================
 -- Topics: Technical > EEE
@@ -144,7 +151,8 @@ join public.branches b on b.category_id = c.id and b.slug = 'eee',
   ('Power Systems', 'power-systems', 2),
   ('Control Systems', 'control-systems', 3)
 ) as t(name, slug, display_order)
-where c.slug = 'technical';
+where c.slug = 'technical'
+on conflict (category_id, branch_id, slug) where branch_id is not null do nothing;
 
 -- ============================================================
 -- Sample questions: Quantitative Aptitude > Percentages
