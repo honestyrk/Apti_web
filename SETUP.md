@@ -40,6 +40,7 @@ The SQL that creates every table, security policy, view, and function lives in `
 5. Repeat for [`supabase/migrations/0004_functions.sql`](supabase/migrations/0004_functions.sql).
 6. Repeat for [`supabase/migrations/0005_fix_view_grants.sql`](supabase/migrations/0005_fix_view_grants.sql) (closes a gap where Supabase's default privileges made the question bank readable by unauthenticated requests).
 7. Repeat for [`supabase/migrations/0006_fix_progress_view.sql`](supabase/migrations/0006_fix_progress_view.sql) (fixes a bug where the Dashboard's "Overall accuracy" and "Questions attempted" stats were stuck at 0 for every user, because the underlying view had no permission to read the column it needed).
+8. Repeat for [`supabase/migrations/0007_admin_user_stats.sql`](supabase/migrations/0007_admin_user_stats.sql) (adds the `admin_list_users` function powering the new Admin → Users page).
 
 Each file must succeed before running the next one, since later files depend on tables/functions created earlier.
 
@@ -61,7 +62,7 @@ Together these create the full category/branch/topic tree (Quantitative Aptitude
 
 ---
 
-## 6. Configure Auth settings (with Resend for email delivery)
+## 6. Configure Auth settings
 
 1. In the Supabase dashboard, go to **Authentication → Providers → Email**, and confirm Email provider is enabled (it is by default).
 2. Leave **"Confirm email"** turned **on** (the default). The app requires users to click the confirmation link in their inbox before they can log in — after signup they'll see a "check your inbox" screen, and the login page shows a "resend confirmation email" option if they try to log in too early.
@@ -71,26 +72,8 @@ Together these create the full category/branch/topic tree (Quantitative Aptitude
    - Under **Redirect URLs**, add both:
      - `http://localhost:5173/**` (local dev — Vite's default port)
      - `https://your-app.vercel.app/**` (production)
-4. **Create a Resend account** at [resend.com](https://resend.com) (free tier is enough to start).
-5. **Add and verify a sending domain:**
-   - In the Resend dashboard, go to **Domains → Add Domain**, enter a domain you control, and add the DNS records (DKIM/SPF) it gives you at your domain registrar.
-   - Verification can take a few minutes to a few hours depending on DNS propagation.
-   - *Skipping this for quick local testing:* Resend also lets you send from `onboarding@resend.dev` without verifying a domain, but delivery is more limited — verify your own domain before inviting real users.
-6. **Get a Resend API key:** in the Resend dashboard, go to **API Keys → Create API Key**, and copy it (you won't be able to see it again — store it safely).
-7. **Connect Resend to Supabase as a custom SMTP provider** (this is the actual integration point — Supabase Auth sends emails through whatever SMTP server you configure, and Resend exposes a standard SMTP relay):
-   - In the Supabase dashboard, go to **Project Settings → Auth → SMTP Settings** (or **Authentication → Emails → SMTP Settings**, depending on dashboard version).
-   - Toggle **Enable Custom SMTP** on.
-   - Fill in:
-     - **Sender email:** an address on your verified domain (e.g. `noreply@yourdomain.com`), or `onboarding@resend.dev` if you skipped domain verification.
-     - **Sender name:** e.g. `PlacementPrep`
-     - **Host:** `smtp.resend.com`
-     - **Port:** `465` (SSL) — or `587` (TLS)
-     - **Username:** `resend` (this literal string, not your email)
-     - **Password:** your Resend API key from step 6
-   - Save.
-8. **(Optional) Customize the email template:** go to **Authentication → Email Templates → Confirm signup** to edit the subject line and body copy sent to new users.
-9. **Test it:** sign up with a real email address through the running app and confirm the email arrives via Resend (check the Resend dashboard's **Logs** tab to see delivery status if it doesn't show up).
-10. This app only uses email/password authentication — no other providers need to be configured.
+4. Supabase sends confirmation emails via its own built-in mail service out of the box — no SMTP setup needed. It's rate-limited (a small number of emails per hour), which is fine for development and light usage. If you outgrow that limit later, you can configure a custom SMTP provider under **Project Settings → Auth → SMTP Settings** — but it isn't required to get started.
+5. This app only uses email/password authentication — no other providers need to be configured.
 
 ---
 
@@ -173,5 +156,6 @@ git push -u origin main
 - [ ] Start a Test mode mock test, let the timer run, and confirm it auto-submits and shows a scored review.
 - [ ] Check the Dashboard reflects your accuracy stats.
 - [ ] Log in as your admin account and add a new question — confirm it's immediately practiceable by a regular user.
+- [ ] Go to Admin → Users and confirm you see every registered user's questions attempted, accuracy, practice sessions, and tests taken.
 
-If any step fails, double check that all six migration files ran successfully and in order, that the Resend SMTP settings in Supabase are saved correctly (check the Resend **Logs** tab for delivery errors), and that both environment variables are set correctly in both `.env.local` and Vercel.
+If any step fails, double check that all seven migration files ran successfully and in order, that the Site URL / Redirect URLs are set correctly in Supabase Auth, and that both environment variables are set correctly in both `.env.local` and Vercel.

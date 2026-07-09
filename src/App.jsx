@@ -19,6 +19,7 @@ import ProfilePage from './pages/ProfilePage'
 import NotFoundPage from './pages/NotFoundPage'
 
 import AdminDashboardPage from './pages/admin/AdminDashboardPage'
+import AdminUsersPage from './pages/admin/AdminUsersPage'
 import AdminQuestionsPage from './pages/admin/AdminQuestionsPage'
 import AdminQuestionFormPage from './pages/admin/AdminQuestionFormPage'
 import AdminTopicsPage from './pages/admin/AdminTopicsPage'
@@ -47,6 +48,7 @@ function App() {
 
         <Route element={<AdminRoute />}>
           <Route path="/admin" element={<AdminDashboardPage />} />
+          <Route path="/admin/users" element={<AdminUsersPage />} />
           <Route path="/admin/questions" element={<AdminQuestionsPage />} />
           <Route path="/admin/questions/new" element={<AdminQuestionFormPage />} />
           <Route path="/admin/questions/:id/edit" element={<AdminQuestionFormPage />} />
