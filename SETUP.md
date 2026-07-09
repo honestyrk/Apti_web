@@ -42,6 +42,7 @@ The SQL that creates every table, security policy, view, and function lives in `
 7. Repeat for [`supabase/migrations/0006_fix_progress_view.sql`](supabase/migrations/0006_fix_progress_view.sql) (fixes a bug where the Dashboard's "Overall accuracy" and "Questions attempted" stats were stuck at 0 for every user, because the underlying view had no permission to read the column it needed).
 8. Repeat for [`supabase/migrations/0007_admin_user_stats.sql`](supabase/migrations/0007_admin_user_stats.sql) (adds the `admin_list_users` function powering the new Admin → Users page).
 9. Repeat for [`supabase/migrations/0008_fix_admin_bootstrap.sql`](supabase/migrations/0008_fix_admin_bootstrap.sql) (fixes a bug where the "promote yourself to admin" SQL in Step 9 below was itself blocked by the role-change guard trigger — run this before attempting Step 9).
+10. Repeat for [`supabase/migrations/0009_fix_questions_public_grant.sql`](supabase/migrations/0009_fix_questions_public_grant.sql) (fixes "permission denied for table questions" on the Practice page — the `questions_public` view wasn't reliably bypassing the base table's access restriction for logged-in users).
 
 Each file must succeed before running the next one, since later files depend on tables/functions created earlier.
 
@@ -159,4 +160,4 @@ git push -u origin main
 - [ ] Log in as your admin account and add a new question — confirm it's immediately practiceable by a regular user.
 - [ ] Go to Admin → Users and confirm you see every registered user's questions attempted, accuracy, practice sessions, and tests taken.
 
-If any step fails, double check that all eight migration files ran successfully and in order, that the Site URL / Redirect URLs are set correctly in Supabase Auth, and that both environment variables are set correctly in both `.env.local` and Vercel.
+If any step fails, double check that all nine migration files ran successfully and in order, that the Site URL / Redirect URLs are set correctly in Supabase Auth, and that both environment variables are set correctly in both `.env.local` and Vercel.
