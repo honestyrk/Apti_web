@@ -61,12 +61,36 @@ Together these create the full category/branch/topic tree (Quantitative Aptitude
 
 ---
 
-## 6. Configure Auth settings
+## 6. Configure Auth settings (with Resend for email delivery)
 
 1. In the Supabase dashboard, go to **Authentication → Providers → Email**, and confirm Email provider is enabled (it is by default).
 2. Leave **"Confirm email"** turned **on** (the default). The app requires users to click the confirmation link in their inbox before they can log in — after signup they'll see a "check your inbox" screen, and the login page shows a "resend confirmation email" option if they try to log in too early.
-3. Supabase sends confirmation emails via its own built-in mail service out of the box — no SMTP setup needed to test this. It's rate-limited (a handful of emails per hour), which is fine for development. Before launching to real users, configure a custom SMTP provider under **Project Settings → Auth → SMTP Settings** so confirmation emails are reliable at higher volume.
-4. This app only uses email/password authentication — no other providers need to be configured.
+3. **Set the Site URL and Redirect URLs** (this controls where the confirmation link in the email actually points — a common source of "link doesn't work" bugs):
+   - Go to **Authentication → URL Configuration**.
+   - Set **Site URL** to your production URL (e.g. `https://your-app.vercel.app`).
+   - Under **Redirect URLs**, add both:
+     - `http://localhost:5173/**` (local dev — Vite's default port)
+     - `https://your-app.vercel.app/**` (production)
+4. **Create a Resend account** at [resend.com](https://resend.com) (free tier is enough to start).
+5. **Add and verify a sending domain:**
+   - In the Resend dashboard, go to **Domains → Add Domain**, enter a domain you control, and add the DNS records (DKIM/SPF) it gives you at your domain registrar.
+   - Verification can take a few minutes to a few hours depending on DNS propagation.
+   - *Skipping this for quick local testing:* Resend also lets you send from `onboarding@resend.dev` without verifying a domain, but delivery is more limited — verify your own domain before inviting real users.
+6. **Get a Resend API key:** in the Resend dashboard, go to **API Keys → Create API Key**, and copy it (you won't be able to see it again — store it safely).
+7. **Connect Resend to Supabase as a custom SMTP provider** (this is the actual integration point — Supabase Auth sends emails through whatever SMTP server you configure, and Resend exposes a standard SMTP relay):
+   - In the Supabase dashboard, go to **Project Settings → Auth → SMTP Settings** (or **Authentication → Emails → SMTP Settings**, depending on dashboard version).
+   - Toggle **Enable Custom SMTP** on.
+   - Fill in:
+     - **Sender email:** an address on your verified domain (e.g. `noreply@yourdomain.com`), or `onboarding@resend.dev` if you skipped domain verification.
+     - **Sender name:** e.g. `PlacementPrep`
+     - **Host:** `smtp.resend.com`
+     - **Port:** `465` (SSL) — or `587` (TLS)
+     - **Username:** `resend` (this literal string, not your email)
+     - **Password:** your Resend API key from step 6
+   - Save.
+8. **(Optional) Customize the email template:** go to **Authentication → Email Templates → Confirm signup** to edit the subject line and body copy sent to new users.
+9. **Test it:** sign up with a real email address through the running app and confirm the email arrives via Resend (check the Resend dashboard's **Logs** tab to see delivery status if it doesn't show up).
+10. This app only uses email/password authentication — no other providers need to be configured.
 
 ---
 
@@ -150,4 +174,4 @@ git push -u origin main
 - [ ] Check the Dashboard reflects your accuracy stats.
 - [ ] Log in as your admin account and add a new question — confirm it's immediately practiceable by a regular user.
 
-If any step fails, double check that all five migration files ran successfully and in order, and that both environment variables are set correctly in both `.env.local` and Vercel.
+If any step fails, double check that all six migration files ran successfully and in order, that the Resend SMTP settings in Supabase are saved correctly (check the Resend **Logs** tab for delivery errors), and that both environment variables are set correctly in both `.env.local` and Vercel.
